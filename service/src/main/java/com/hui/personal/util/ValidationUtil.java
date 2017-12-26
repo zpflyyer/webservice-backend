@@ -15,6 +15,9 @@ public class ValidationUtil implements WebServiceConstants{
                 && phoneNum.matches("\\d{11}");
     }
     public static int checkOrderInfo(String name, String phoneNum, Calendar dateTime){
-        return !DateUtil.withinTwoDays(dateTime) ? afterTwoDays : !(isValidName(name) && isValidPhoneNum(phoneNum)) ?  invalidInput : success;
+        return !DateUtil.withinTwoDays(dateTime) ? outOfTwoDays : !(isValidName(name) && isValidPhoneNum(phoneNum)) ?  invalidInput : success;
+    }
+    public static int checkCancelInfo(String name, String phoneNum, Calendar dateTime){
+        return !DateUtil.withinTwoDays(dateTime) ? outOfTwoDays : !(isValidName(name) && isValidPhoneNum(phoneNum)) ?  invalidInput : success;
     }
 }

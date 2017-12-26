@@ -4,16 +4,26 @@ package com.hui.personal.util;
 import com.hui.personal.WebServiceConstants;
 
 public class MessageUtil implements WebServiceConstants{
-    public static String getResponse(int msgId){
+    private static String getResposne(int msgId, boolean ifOrder){
         String msg = "";
         switch (msgId){
-            case afterTwoDays : msg = afterTwoDaysMsg;break;
+            case outOfTwoDays : msg = outOfTwoDaysMsg;break;
             case invalidInput : msg = invalidInputMsg;break;
             case saleOut : msg = saleOutMsg;break;
             case success : msg = successMsg;break;
             case duplicated : msg = duplicatedMsg;break;
-            case badDateFormat: msg = badDateFormatMsg;break;
+            case badDateFormat : msg = badDateFormatMsg;break;
+            case notFound : msg = notFoundMsg;break;
+            case successCancel : msg = successCancelMsg;break;
         };
-        return "{orderResponse:{status:\"" + msgId + "\",message:\"" + msg + "}}";
+        return ifOrder ? "{orderResponse:{status:\"" + msgId + "\",message:\"" + msg + "}}"
+                : "{cancelResponse:{status:\"" + msgId + "\",message:\"" + msg + "}}";
+    }
+
+    public static String getCancelResponse(int msgId){
+        return getResposne(msgId,true);
+    }
+    public static String getOrderResponse(int msgId){
+        return getResposne(msgId,false);
     }
 }

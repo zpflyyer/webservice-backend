@@ -48,11 +48,7 @@ inputContact{
 }
 
 task{
-
-    if(!Current.isInteger){
-        list<time> = getAllHoursFromNowWithin2Days();
-
-    }
+    flush();
 }
 
 

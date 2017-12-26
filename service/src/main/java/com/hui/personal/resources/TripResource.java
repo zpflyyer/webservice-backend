@@ -34,4 +34,10 @@ public class TripResource implements WebServiceConstants{
         return tripService.order(name,phoneNum, dateTime);
     }
 
+    @RequestMapping("/cancel")
+    public String cancel(@RequestParam String name, @RequestParam String phoneNum, @RequestParam String dateTime){
+
+        return tripService.cancel(name,phoneNum, dateTime);
+    }
+
 }

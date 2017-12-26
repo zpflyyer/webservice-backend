@@ -83,24 +83,17 @@ public class TripManager implements WebServiceConstants{
         return !trips.containsKey(setOff) || trips.get(setOff).size() < seatsPerTrip;
     }
 
-    public Boolean ordered(String setOff, String phoneNum){
+    public Passenger getRecords(String setOff, String phoneNum){
         //quick fail for performance
         if (! trips.containsKey(setOff)){
-            return false;
+            return null;
         }
         for (Passenger p:
              trips.get(setOff)) {
             if (p.getPhoneNum().equalsIgnoreCase(phoneNum)) {
-                return true;
+                return p;
             }
         }
-        for (List<Passenger> passengers:
-             trips.values()) {
-            for (Passenger p:
-                 passengers) {
-                log.info(passengers.toString());
-            }
-        }
-        return false;
+        return null;
     }
 }

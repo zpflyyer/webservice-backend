@@ -7,7 +7,6 @@ import com.hui.personal.util.MessageUtil;
 import com.hui.personal.util.ValidationUtil;
 import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.commons.collections4.MapUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -35,23 +34,44 @@ public class TripService implements WebServiceConstants{
             date.setTime(new SimpleDateFormat(standardFormat).parse(setOff));
         } catch (ParseException e){
             log.error(setOff);
-            return MessageUtil.getResponse(badDateFormat);
+            return MessageUtil.getOrderResponse(badDateFormat);
         }
 
         int checkResult = ValidationUtil.checkOrderInfo(name,phoneNum,date);
         if ( checkResult!= success ) {
-            return MessageUtil.getResponse(checkResult);
+            return MessageUtil.getOrderResponse(checkResult);
         }
         if ( !tripManager.hasNext(setOff)){
-            return MessageUtil.getResponse(saleOut);
+            return MessageUtil.getOrderResponse(saleOut);
         }
-        if (tripManager.ordered(setOff,phoneNum)){
-            return MessageUtil.getResponse(duplicated);
+        if (tripManager.getRecords(setOff,phoneNum) != null){
+            return MessageUtil.getOrderResponse(duplicated);
         }
         if (tripManager.getTrips().get(setOff) == null){
             tripManager.getTrips().put(setOff,new ArrayList<>());
         }
         tripManager.getTrips().get(setOff).add(new Passenger(name,phoneNum));
-        return MessageUtil.getResponse(success);
+        return MessageUtil.getOrderResponse(success);
+    }
+
+    public String cancel(String name,String phoneNum, String setOff){
+        Calendar date = Calendar.getInstance();
+        try {
+            date.setTime(new SimpleDateFormat(standardFormat).parse(setOff));
+        } catch (ParseException e){
+            log.error(setOff);
+            return MessageUtil.getCancelResponse(badDateFormat);
+        }
+
+        int checkResult = ValidationUtil.checkOrderInfo(name,phoneNum,date);
+        if ( checkResult!= success ) {
+            return MessageUtil.getCancelResponse(checkResult);
+        }
+        Passenger p = tripManager.getRecords(setOff,phoneNum);
+        if ( p == null){
+            return MessageUtil.getCancelResponse(notFound);
+        }
+        tripManager.getTrips().get(setOff).remove(p);
+        return MessageUtil.getCancelResponse(successCancel);
     }
 }

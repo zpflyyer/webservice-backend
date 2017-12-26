@@ -10,17 +10,21 @@ public interface WebServiceConstants {
 
     //status code
     public static final int badDateFormat = -4;
-    public static final int afterTwoDays = -3;
+    public static final int outOfTwoDays = -3;
     public static final int invalidInput = -2;
     public static final int saleOut = -1;
     public static final int success = 0;
-    public static final int duplicated = 1;
+    public static final int successCancel = 1;
+    public static final int duplicated = 2;
+    public static final int notFound = 3;
 
     //message
-    public static final String badDateFormatMsg = "date format is invalid";
-    public static final String afterTwoDaysMsg = "you can only order ticket for today or tommorow.";
-    public static final String invalidInputMsg = "invalid name or phone number.";
+    public static final String badDateFormatMsg = "Date format is invalid";
+    public static final String outOfTwoDaysMsg = "You can only operate on orders in 2 days.";
+    public static final String invalidInputMsg = "Invalid name or phone number.";
     public static final String saleOutMsg = "Sorry, tickets for this time are sold out, try another time.";
     public static final String successMsg = "Successfully ordered!";
+    public static final String successCancelMsg = "Successfully canceled!";
     public static final String duplicatedMsg = "This phone number has ordered a ticket for this time!";
+    public static final String notFoundMsg = "No records found.";
 }
