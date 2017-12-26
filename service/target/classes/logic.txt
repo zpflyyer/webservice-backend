@@ -1,0 +1,91 @@
+order:
+inputDate{
+	if(validDate){
+		inputTime{
+			if(Seats.hasNext){
+				inputContact{
+					if(validContact){
+						checkIfOrdered{
+							if(ordered){
+								log.warn("you have ordered")-<
+							}
+							else{
+								order();
+								return {"result":"success"}-<
+							}
+						}
+					}
+					else{
+						log.warn("invalid contact")-<
+					}
+				}
+			}
+			else{
+				log.warn("no more seats")-<
+			}
+		}
+	}
+	else{
+		log.warn("out of date")-<
+	}
+}
+
+cacel order:
+inputContact{
+	if(validContact){
+		checkIfOrdered{
+			if(ordered){
+				cancelOrder()-<
+			}
+			else{
+				log.warn("no order found")-<
+			}
+		}
+	}
+	else{
+		log.warn("invalid contact")-<
+	}
+}
+
+task{
+
+    if(!Current.isInteger){
+        list<time> = getAllHoursFromNowWithin2Days();
+
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
